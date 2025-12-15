@@ -1,20 +1,4 @@
 #!/usr/bin/env python3
-"""
-Expense Tracker CLI
--------------------
-A clean, responsible, and honest implementation of a simple expense tracker.
-Data is stored locally in a JSON file.
-
-Features:
-- Add, update, delete expenses
-- List all expenses
-- View total summary
-- View monthly summary (current year)
-- Basic validation and error handling
-
-Author: ChatGPT (for Asma)
-"""
-
 import argparse
 import json
 import os
@@ -22,11 +6,6 @@ from datetime import datetime
 from typing import List, Dict
 
 DATA_FILE = "expenses.json"
-
-
-# ----------------------
-# Data Layer
-# ----------------------
 
 def load_expenses() -> List[Dict]:
     if not os.path.exists(DATA_FILE):
@@ -37,21 +16,14 @@ def load_expenses() -> List[Dict]:
         except json.JSONDecodeError:
             return []
 
-
 def save_expenses(expenses: List[Dict]) -> None:
     with open(DATA_FILE, "w", encoding="utf-8") as f:
         json.dump(expenses, f, indent=2)
-
 
 def generate_id(expenses: List[Dict]) -> int:
     if not expenses:
         return 1
     return max(exp["id"] for exp in expenses) + 1
-
-
-# ----------------------
-# Core Logic
-# ----------------------
 
 def add_expense(description: str, amount: float) -> None:
     if amount <= 0:
@@ -69,7 +41,6 @@ def add_expense(description: str, amount: float) -> None:
     save_expenses(expenses)
 
     print(f"Expense added successfully (ID: {expense['id']})")
-
 
 def update_expense(expense_id: int, description: str, amount: float) -> None:
     expenses = load_expenses()
@@ -90,7 +61,6 @@ def update_expense(expense_id: int, description: str, amount: float) -> None:
 
     print("Error: Expense ID not found")
 
-
 def delete_expense(expense_id: int) -> None:
     expenses = load_expenses()
     new_expenses = [exp for exp in expenses if exp["id"] != expense_id]
@@ -101,7 +71,6 @@ def delete_expense(expense_id: int) -> None:
 
     save_expenses(new_expenses)
     print("Expense deleted successfully")
-
 
 def list_expenses() -> None:
     expenses = load_expenses()
@@ -117,7 +86,6 @@ def list_expenses() -> None:
             f"{exp['id']:<3} {exp['date']}  {exp['description']:<20}  ${exp['amount']}"
         )
 
-
 def summary(month: int | None = None) -> None:
     expenses = load_expenses()
     total = 0
@@ -132,11 +100,6 @@ def summary(month: int | None = None) -> None:
         print(f"Total expenses for {month_name}: ${total}")
     else:
         print(f"Total expenses: ${total}")
-
-
-# ----------------------
-# CLI Interface
-# ----------------------
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Expense Tracker CLI")
