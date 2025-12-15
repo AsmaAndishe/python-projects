@@ -12,5 +12,12 @@ This application allows users to manage daily expenses directly from the termina
 - Local data persistence using a JSON file
 - Input validation and error handling
 
+# 🛠️ Technologies Used
+- Python 3
+- argparse (for CLI command parsing)
+- JSON (for data storage)
+- Standard Python libraries only
+No external dependencies are required.
+
 # 🔗More info
 https://roadmap.sh/projects/expense-tracker
